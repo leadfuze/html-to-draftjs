@@ -59,6 +59,21 @@ function genFragment(
     return { chunk: getAtomicBlockChunk(entityId) };
   }
 
+  if(nodeName === 'a' && node.hasChildNodes() && node.lastChild instanceof HTMLImageElement) {
+    const img = node.lastChild;
+    const entityConfig = {};
+    entityConfig.href = node.getAttribute ? node.getAttribute('href') || node.href : node.href;
+    entityConfig.targetOption = node.target;
+    entityConfig.src = img.getAttribute ? img.getAttribute('src') || img.src : img.src;
+    entityConfig.alt = img.getAttribute ? img.getAttribute('alt') || img.alt : img.alt;
+    const entityId = Entity.__create(
+      'IMAGE',
+      'MUTABLE',
+      entityConfig,
+    );
+    return { chunk: getAtomicBlockChunk(entityId) };
+  }
+
   if (
     nodeName === 'iframe' &&
     node instanceof HTMLIFrameElement

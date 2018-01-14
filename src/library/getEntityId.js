@@ -15,6 +15,17 @@ const getEntityId = (node) => {
         'IMMUTABLE',
         entityConfig,
       );
+    } else if(node.hasChildNodes() && node.lastChild instanceof HTMLImageElement) {
+      const img = node.lastChild;
+      entityConfig.href = node.getAttribute ? node.getAttribute('href') || node.href : node.href;
+      entityConfig.targetOption = node.target;
+      entityConfig.src = img.getAttribute ? img.getAttribute('src') || img.src : img.src;
+      entityConfig.alt = img.getAttribute ? img.getAttribute('alt') || img.alt : img.alt;
+      entityId = Entity.__create(
+        'IMAGE',
+        'MUTABLE',
+        entityConfig,
+      );
     } else {
       entityConfig.url = node.getAttribute ? node.getAttribute('href') || node.href : node.href;
       entityConfig.title = node.innerHTML;
